@@ -18,6 +18,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseAuthorization();
 
-app.MapControllers();
+app.MapControllers(); // looks for all classes that are controllers (public, controllbase, etc) and reads those "routes" in a route table
 
-app.Run();
+app.Run(); //this is when gates are opened
+
+public partial class Program { }
