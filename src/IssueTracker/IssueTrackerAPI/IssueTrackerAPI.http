@@ -1,5 +1,4 @@
-@IssueTrackerAPI_HostAddress = http://localhost:5185
+@IssueTrackerApi_HostAddress = http://localhost:1337
 
-GET {{IssueTrackerAPI_HostAddress}}/status
 
-###
+GET {{IssueTrackerApi_HostAddress}}/status

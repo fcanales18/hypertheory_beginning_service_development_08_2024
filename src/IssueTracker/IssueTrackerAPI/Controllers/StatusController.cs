@@ -7,15 +7,18 @@ public class StatusController : ControllerBase
 {
     private ILookupSupportInfo supportLookup;
 
+
     public StatusController(ILookupSupportInfo supportLookup)
     {
         this.supportLookup = supportLookup;
+
     }
 
     [HttpGet("/status")]
     public async Task<ActionResult> GetTheStatus()
     {
         // do some work here -
+
         SupportContactResponseModel supportInfo = await supportLookup.GetCurrentSupportInfoAsync();
         var response = new StatusResponseModel
         {
@@ -34,10 +37,4 @@ public record StatusResponseModel
 
     public SupportContactResponseModel SupportContact { get; set; } = new();
 
-}
-
-public record SupportContactResponseModel
-{
-    public string EMail { get; set; } = string.Empty;
-    public string Phone { get; set; } = string.Empty;
 }

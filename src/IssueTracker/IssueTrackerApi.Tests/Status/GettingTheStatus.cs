@@ -1,4 +1,6 @@
-﻿using Alba;
+﻿
+
+using Alba;
 using IssueTrackerApi.Controllers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,10 +29,10 @@ public class GettingTheStatus
         });
 
         var httpResponse = await host.Scenario(api =>
-        {
-            api.Get.Url("/status");
-            api.StatusCodeShouldBeOk();
-        });
+         {
+             api.Get.Url("/status");
+             api.StatusCodeShouldBeOk();
+         });
 
         var representation = await httpResponse.ReadAsJsonAsync<StatusResponseModel>();
 
@@ -46,6 +48,7 @@ public class FakeSupportLookup : ILookupSupportInfo
 {
     public async Task<SupportContactResponseModel> GetCurrentSupportInfoAsync()
     {
+
         return new SupportContactResponseModel
         {
             EMail = "franco@company.com",
