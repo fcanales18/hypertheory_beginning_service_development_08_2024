@@ -1,5 +1,6 @@
 ﻿using Alba;
-using IssueTrackerAPI.Controllers;
+using IssueTrackerApi.Controllers;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace IssueTrackerApi.Tests.Status;
 public class GettingTheStatus
@@ -7,7 +8,23 @@ public class GettingTheStatus
     [Fact]
     public async Task CurrentStatus()
     {
-        var host = await AlbaHost.For<global::Program>();
+
+        var expectedResponse = new StatusResponseModel
+        {
+            Message = "Looks Good Here, Boss!",
+            SupportContact = new SupportContactResponseModel
+            {
+                EMail = "franco@company.com",
+                Phone = "555-1212"
+            }
+        };
+        var host = await AlbaHost.For<global::Program>(config =>
+        {
+            config.ConfigureServices(sp =>
+            {
+                sp.AddScoped<ILookupSupportInfo, FakeSupportLookup>();
+            });
+        });
 
         var httpResponse = await host.Scenario(api =>
         {
@@ -19,6 +36,20 @@ public class GettingTheStatus
 
         Assert.NotNull(representation);
 
-        Assert.Equal("Looks Good Here, Boss", representation.Message);
+        Assert.Equal(expectedResponse, representation);
+    }
+
+}
+
+
+public class FakeSupportLookup : ILookupSupportInfo
+{
+    public async Task<SupportContactResponseModel> GetCurrentSupportInfoAsync()
+    {
+        return new SupportContactResponseModel
+        {
+            EMail = "franco@company.com",
+            Phone = "555-1212"
+        };
     }
 }
