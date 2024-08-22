@@ -12,16 +12,17 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
+    app.UseSwagger(); // /swagger/index.html
     app.UseSwaggerUI();
 }
 
 app.MapGet("/support-info", () =>
 {
+
     var response = new SupportContactResponseModel
     {
-        EMail = "bob@company.com",
-        Phone = "800 123-1234"
+        EMail = "jeff@company.com",
+        Phone = "800 867-5309"
     };
     return Results.Ok(response);
 });
